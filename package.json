@@ -1,0 +1,43 @@
+{
+  "name": "appwrite-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/index.js",
+    "dev": "bun src/index.ts",
+    "build": "npx tsc",
+    "copyTemplates": "copyfiles --error --up 2 src/commands/*.template.ejs lib/commands",
+    "postbuild": "npm run copyTemplates"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.15.4",
+    "appwrite": "^13.0.1",
+    "clipanion": "^4.0.0-rc.3",
+    "ejs": "^3.1.9",
+    "node-appwrite": "^11.1.0",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^20.11.17",
+    "copyfiles": "^2.4.1"
+  },
+  "typesVersions": {
+    "*": {
+      "index": [
+        "lib/index.d.ts"
+      ],
+      "client": [
+        "lib/client.d.ts"
+      ]
+    }
+  },
+  "bin": {
+    "appwrite-sdk": "lib/index.js"
+  }
+}
