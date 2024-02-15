@@ -1,3 +1,8 @@
+./src/schemas/*.ts
+!./src/schemas/base.ts
+!./src/schemas/query.ts
+./src/client.ts
+
 # Logs
 logs
 *.log
