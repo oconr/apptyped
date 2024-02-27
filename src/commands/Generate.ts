@@ -175,14 +175,18 @@ export class GenerateCommand extends Command {
       );
     }
 
-    const previousFiles = await fs.readdir(
-      join(import.meta.dirname, "../../src", "schemas", "generated")
-    );
-
-    for (const file of previousFiles) {
-      await fs.unlink(
-        join(import.meta.dirname, "../../src", "schemas", "generated", file)
+    if (
+      existsSync(join(import.meta.dirname, "../../src", "schemas", "generated"))
+    ) {
+      const previousFiles = await fs.readdir(
+        join(import.meta.dirname, "../../src", "schemas", "generated")
       );
+
+      for (const file of previousFiles) {
+        await fs.unlink(
+          join(import.meta.dirname, "../../src", "schemas", "generated", file)
+        );
+      }
     }
 
     for (const collection of collections) {
@@ -194,7 +198,7 @@ export class GenerateCommand extends Command {
       `export * from "./schemas";`
     );
 
-    exec("npm run build");
+    exec("npx tsc");
 
     this.context.stdout.write(
       "The SDK has been generated and now is ready to use."
