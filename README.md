@@ -1,5 +1,7 @@
 # appwrite-sdk
 
+This is a package that creates a fully typed SDK based on your Appwrite collections
+
 - Build using `npm run build`
 - Create `.env` with the following:
   - `APPWRITE_ENDPOINT` - The endpoint of your Appwrite instance
