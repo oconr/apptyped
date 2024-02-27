@@ -1,4 +1,5 @@
 src/schemas/generated/*.ts
+src/schemas/index.ts
 src/client.ts
 
 lib/
