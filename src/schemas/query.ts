@@ -1,9 +1,17 @@
 import { Query, QueryTypes } from "node-appwrite";
 import { MapType } from "./base.js";
 
-export type Attributes<T> = Extract<keyof T, string>[];
+/**
+ * Represents an array of attributes for a given type T.
+ * @template T The type for which the attributes are defined.
+ */
+export type Attributes<T> = (keyof T)[];
 
-export type Attribute<T> = Extract<keyof T, string>;
+/**
+ * Represents an attribute of a generic type.
+ * @typeparam T - The type containing the attribute.
+ */
+export type Attribute<T> = keyof T;
 
 export class Queries<T> {
   private mapping: MapType<T>;
