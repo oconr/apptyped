@@ -3,6 +3,8 @@ src/schemas/*.ts
 !src/schemas/query.ts
 src/client.ts
 
+lib/
+
 # Logs
 logs
 *.log
