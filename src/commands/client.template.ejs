@@ -1,5 +1,5 @@
-import BaseCollection from './base.js';
-import { Models } from 'appwrite';
+import BaseCollection from '../base.js';
+import type { BaseDocument } from "../base.js";
 
 type <%- ClassName %>Type = {
     <% for (var i = 0; i < Attributes.length; i++) { %>
@@ -7,7 +7,7 @@ type <%- ClassName %>Type = {
     <% } %>
 }
 
-export type <%- ClassName %>ReadType = <%- ClassName %>Type & Models.Document;
+export type <%- ClassName %>ReadType = <%- ClassName %>Type & BaseDocument;
 
 export type <%- ClassName %>InsertType = Partial<<%- ClassName %>Type>
 
@@ -20,24 +20,24 @@ class <%- ClassName %>Service extends BaseCollection<<%- ClassName %>ReadType, <
         });
     }
 
-    public listDocuments(queries?: string[]) {
-        return super.listDocuments("<%- DatabaseId %>", "<%- CollectionId %>", queries);
+    public list(queries?: string[]) {
+        return this.listDocuments("<%- DatabaseId %>", "<%- CollectionId %>", queries);
     }
 
-    public createDocument(documentId: string, data: <%- ClassName %>InsertType) {
-        return super.createDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId, data);
+    public create(documentId: string, data: <%- ClassName %>InsertType) {
+        return this.createDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId, data);
     }
 
-    public getDocument(documentId: string) {
-        return super.getDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId);
+    public get(documentId: string) {
+        return this.getDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId);
     }
 
-    public updateDocument(documentId: string, data: <%- ClassName %>InsertType) {
-        return super.updateDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId, data);
+    public update(documentId: string, data: <%- ClassName %>InsertType) {
+        return this.updateDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId, data);
     }
 
-    public deleteDocument(documentId: string) {
-        return super.deleteDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId);
+    public delete(documentId: string) {
+        return this.deleteDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId);
     }
 }
 
