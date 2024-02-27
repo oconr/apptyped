@@ -1,6 +1,4 @@
-src/schemas/*.ts
-!src/schemas/base.ts
-!src/schemas/query.ts
+src/schemas/generated/*.ts
 src/client.ts
 
 lib/
