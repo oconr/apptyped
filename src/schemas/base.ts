@@ -2,6 +2,15 @@ import { Client, Databases } from "node-appwrite";
 import { Queries } from "./query.js";
 import { Models } from "appwrite";
 
+export type BaseDocument = {
+  $id: string;
+  $collectionId: string;
+  $databaseId: string;
+  $createdAt: string;
+  $updatedAt: string;
+  $permissions: string[];
+};
+
 export type MappingType<ReadType> = Record<
   keyof Omit<
     ReadType,
