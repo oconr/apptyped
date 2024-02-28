@@ -17,7 +17,7 @@ class BaseCollection<ReadType extends BaseDocument, WriteType extends object> {
       throw new Error("APPWRITE_ENDPOINT is not defined");
     }
 
-    if (!process.env.APPWRITE_PROJECT) {
+    if (!process.env.APPWRITE_PROJECT_ID) {
       throw new Error("APPWRITE_PROJECT is not defined");
     }
 
@@ -27,7 +27,7 @@ class BaseCollection<ReadType extends BaseDocument, WriteType extends object> {
 
     this.client
       .setEndpoint(process.env.APPWRITE_ENDPOINT)
-      .setProject(process.env.APPWRITE_PROJECT)
+      .setProject(process.env.APPWRITE_PROJECT_ID)
       .setKey(process.env.APPWRITE_API_KEY);
 
     this.db = new Databases(this.client);
