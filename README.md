@@ -10,3 +10,22 @@ This is a package that creates a fully typed SDK based on your Appwrite collecti
 - Run `node lib/index g` to generate the fully typed SDK
 
 > This SDK is compatible with Appwrite server version 1.4.x
+
+### Example
+
+```typescript
+// Import location will depend on if you're using it for server-side or client-side
+// Server-side SDK import
+import { Databases, Clien;t } from 'appwrite-sdk/server'
+// Client-side SDK import
+import { Databases, Client } from 'appwrite-sdk/client';
+
+const client = new Client();
+// Databases will return as an object of all your collections which can be access as shown below
+const { BlogPosts } = new Databases(client);
+
+// Fully typed queries can be accessed from .q of each collection
+const data = await BlogPosts.list([
+    BlogPosts.q.equal("published", true),
+]);
+```
