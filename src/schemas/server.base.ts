@@ -3,14 +3,16 @@ import { Queries } from "./query.js";
 import { BaseDocument, MapType, MappingType } from "./base.js";
 
 class BaseCollection<ReadType extends BaseDocument, WriteType extends object> {
-  protected client = new Client();
+  protected client: Client;
   protected db: Databases;
 
   protected mapping: MapType<ReadType>;
 
   public q: Queries<ReadType>;
 
-  constructor(mapping: MappingType<ReadType>) {
+  constructor(client: Client, mapping: MappingType<ReadType>) {
+    this.client = client;
+
     if (!process.env.APPWRITE_ENDPOINT) {
       throw new Error("APPWRITE_ENDPOINT is not defined");
     }
