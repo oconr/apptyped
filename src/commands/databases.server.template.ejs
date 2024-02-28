@@ -1,0 +1,20 @@
+import type { Client } from 'node-appwrite';
+<% for (var i = 0; i < ClassNames.length; i++) { %>
+    import { <%- ClassNames[i] %>Service } from './schemas/server.js';
+<% } %>
+
+export class Databases {
+    protected client: Client;
+
+    constructor(client: Client) {
+        this.client = client;
+    }
+
+    <% for (var i = 0; i < ClassNames.length; i++) { %>
+        public get <%- ClassNames[i] %>() {
+            return new <%- ClassNames[i] %>Service(this.client);
+        }
+    <% } %>
+}
+
+export { Client } from 'node-appwrite';
