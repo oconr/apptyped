@@ -1,6 +1,6 @@
 {
   "name": "apptyped",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A fully typed Appwrite SDK for both client-side and server-side Javascript.",
   "main": "lib/index.js",
   "scripts": {
