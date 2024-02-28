@@ -16,9 +16,9 @@ This is a package that creates a fully typed SDK based on your Appwrite collecti
 ```typescript
 // Import location will depend on if you're using it for server-side or client-side
 // Server-side SDK import
-import { Databases, Client } from 'appwrite-sdk/server'
+import { Databases, Client } from 'apptyped/server'
 // Client-side SDK import
-import { Databases, Client } from 'appwrite-sdk/client';
+import { Databases, Client } from 'apptyped/client';
 
 const client = new Client();
 // Databases will return as an object of all your collections which can be access as shown below
