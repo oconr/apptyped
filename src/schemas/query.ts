@@ -1,5 +1,5 @@
 import { Query, QueryTypes } from "node-appwrite";
-import { MapType } from "./base.js";
+import { MapType } from "./base";
 
 /**
  * Represents an array of attributes for a given type T.
