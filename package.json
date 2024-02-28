@@ -1,7 +1,7 @@
 {
-  "name": "appwrite-sdk",
-  "version": "1.0.0",
-  "description": "",
+  "name": "apptyped",
+  "version": "1.0.5",
+  "description": "A fully typed Appwrite SDK for both client-side and server-side Javascript.",
   "main": "lib/index.js",
   "scripts": {
     "start": "node lib/index.js",
@@ -10,8 +10,19 @@
     "copyTemplates": "copyfiles --error --up 2 src/commands/*.template.ejs lib/commands",
     "postbuild": "npm run copyTemplates"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "appwrite",
+    "sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oconr/apptyped"
+  },
+  "author": {
+    "name": "Ryan O'Connor",
+    "email": "ryan@oconr.co.uk",
+    "url": "https://oconr.co.uk"
+  },
   "license": "ISC",
   "type": "module",
   "dependencies": {
@@ -27,11 +38,20 @@
     "@types/node": "^20.11.17",
     "copyfiles": "^2.4.1"
   },
+  "exports": {
+    "./client": {
+      "types": "./lib/client.d.ts",
+      "require": "./lib/client.js",
+      "import": "./lib/client.js"
+    },
+    "./server": {
+      "types": "./lib/server.d.ts",
+      "require": "./lib/server.js",
+      "import": "./lib/server.js"
+    }
+  },
   "typesVersions": {
     "*": {
-      "index": [
-        "lib/index.d.ts"
-      ],
       "client": [
         "lib/client.d.ts"
       ],
@@ -41,6 +61,6 @@
     }
   },
   "bin": {
-    "appwrite-sdk": "lib/index.js"
+    "apptyped": "lib/index.js"
   }
 }
