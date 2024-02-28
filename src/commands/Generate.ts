@@ -168,10 +168,18 @@ export class GenerateCommand extends Command {
     }
 
     if (
-      existsSync(join(import.meta.dirname, "../../src", "schemas", "index.ts"))
+      existsSync(join(import.meta.dirname, "../../src", "schemas", "client.ts"))
     ) {
       await fs.unlink(
-        join(import.meta.dirname, "../../src", "schemas", "index.ts")
+        join(import.meta.dirname, "../../src", "schemas", "client.ts")
+      );
+    }
+
+    if (
+      existsSync(join(import.meta.dirname, "../../src", "schemas", "server.ts"))
+    ) {
+      await fs.unlink(
+        join(import.meta.dirname, "../../src", "schemas", "server.ts")
       );
     }
 
@@ -195,13 +203,18 @@ export class GenerateCommand extends Command {
 
     await fs.writeFile(
       join(import.meta.dirname, "../../src", "client.ts"),
-      `export * from "./schemas";`
+      `export * from "./schemas/client.ts";`
+    );
+
+    await fs.writeFile(
+      join(import.meta.dirname, "../../src", "server.ts"),
+      `export * from "./schemas/server.ts"`
     );
 
     exec("npx tsc");
 
     this.context.stdout.write(
-      "The SDK has been generated and now is ready to use."
+      "The SDK has been generated and now is ready to use.\n To import your collections in a server environment, import from `appwrite-sdk/server`.\n To import your collections in a client environment, import from `appwrite-sdk/client`.\n"
     );
   }
 
@@ -245,8 +258,18 @@ export class GenerateCommand extends Command {
       mappedAttributes.push(newAttribute);
     }
 
-    const output = await ejs.renderFile(
+    const clientOutput = await ejs.renderFile(
       join(import.meta.dirname, `./client.template.ejs`),
+      {
+        ClassName: this.toCamelCase(collection.name, true),
+        DatabaseId: collection.databaseId,
+        CollectionId: collection.$id,
+        Attributes: mappedAttributes,
+      }
+    );
+
+    const serverOutput = await ejs.renderFile(
+      join(import.meta.dirname, `./server.template.ejs`),
       {
         ClassName: this.toCamelCase(collection.name, true),
         DatabaseId: collection.databaseId,
@@ -271,25 +294,52 @@ export class GenerateCommand extends Command {
         "../../src",
         "schemas",
         "generated",
-        `${schemaName}.ts`
+        `${schemaName}-client.ts`
       ),
-      output
+      clientOutput
     );
-    let currentBarrel = "";
+
+    await fs.writeFile(
+      join(
+        import.meta.dirname,
+        "../../src",
+        "schemas",
+        "generated",
+        `${schemaName}-server.ts`
+      ),
+      serverOutput
+    );
+    let clientBarrel = "";
+    let serverBarrel = "";
 
     if (
-      existsSync(join(import.meta.dirname, "../../src", "schemas", "index.ts"))
+      existsSync(join(import.meta.dirname, "../../src", "schemas", "client.ts"))
     ) {
-      currentBarrel = await fs.readFile(
-        join(import.meta.dirname, "../../src", "schemas", "index.ts"),
+      clientBarrel = await fs.readFile(
+        join(import.meta.dirname, "../../src", "schemas", "client.ts"),
         "utf-8"
       );
     }
-    const newBarrel =
-      currentBarrel + `export * from "./generated/${schemaName}.js";\n`;
+    const newClientBarrel =
+      clientBarrel + `export * from "./generated/${schemaName}-client.js";\n`;
     await fs.writeFile(
-      join(import.meta.dirname, "../../src", "schemas", "index.ts"),
-      newBarrel
+      join(import.meta.dirname, "../../src", "schemas", "client.ts"),
+      newClientBarrel
+    );
+
+    if (
+      existsSync(join(import.meta.dirname, "../../src", "schemas", "server.ts"))
+    ) {
+      serverBarrel = await fs.readFile(
+        join(import.meta.dirname, "../../src", "schemas", "server.ts"),
+        "utf-8"
+      );
+    }
+    const newServerBarrel =
+      serverBarrel + `export * from "./generated/${schemaName}-server.js";\n`;
+    await fs.writeFile(
+      join(import.meta.dirname, "../../src", "schemas", "server.ts"),
+      newServerBarrel
     );
   }
 
