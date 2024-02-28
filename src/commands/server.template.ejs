@@ -1,0 +1,44 @@
+import BaseCollection from '../server.base.js';
+import type { BaseDocument } from "../base.js";
+
+type <%- ClassName %>Type = {
+    <% for (var i = 0; i < Attributes.length; i++) { %>
+        <%- Attributes[i].type %>
+    <% } %>
+}
+
+export type <%- ClassName %>ReadType = <%- ClassName %>Type & BaseDocument;
+
+export type <%- ClassName %>InsertType = Partial<<%- ClassName %>Type>
+
+class <%- ClassName %>Service extends BaseCollection<<%- ClassName %>ReadType, <%- ClassName %>InsertType>{
+    constructor() {
+        super({
+            <% for (var i = 0; i < Attributes.length; i++) { %>
+                <%- Attributes[i].key %>,
+            <% } %>
+        });
+    }
+
+    public list(queries?: string[]) {
+        return this.listDocuments("<%- DatabaseId %>", "<%- CollectionId %>", queries);
+    }
+
+    public create(documentId: string, data: <%- ClassName %>InsertType) {
+        return this.createDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId, data);
+    }
+
+    public get(documentId: string) {
+        return this.getDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId);
+    }
+
+    public update(documentId: string, data: <%- ClassName %>InsertType) {
+        return this.updateDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId, data);
+    }
+
+    public delete(documentId: string) {
+        return this.deleteDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId);
+    }
+}
+
+export const <%- ClassName %> = new <%- ClassName %>Service();
