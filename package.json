@@ -34,6 +34,9 @@
       ],
       "client": [
         "lib/client.d.ts"
+      ],
+      "server": [
+        "lib/server.d.ts"
       ]
     }
   },

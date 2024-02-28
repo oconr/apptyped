@@ -1,6 +1,8 @@
 src/schemas/generated/*.ts
-src/schemas/index.ts
+src/schemas/client.ts
+src/schemas/server.ts
 src/client.ts
+src/server.ts
 
 lib/
 
