@@ -1,0 +1,11 @@
+src/schemas/generated/*.ts
+src/schemas/client.ts
+src/schemas/server.ts
+src/client.ts
+src/server.ts
+
+lib/schemas/generated/
+lib/schemas/client.js
+lib/schemas/server.js
+lib/client.js
+lib/server.js
