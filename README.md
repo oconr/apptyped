@@ -1,4 +1,4 @@
-# appwrite-sdk
+# Apptyped
 
 This is a package that creates a fully typed SDK based on your Appwrite collections
 
