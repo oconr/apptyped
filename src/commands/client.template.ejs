@@ -1,3 +1,4 @@
+import type { Client } from 'appwrite';
 import BaseCollection from '../client.base.js';
 import type { BaseDocument } from "../base.js";
 
@@ -11,9 +12,9 @@ export type <%- ClassName %>ReadType = <%- ClassName %>Type & BaseDocument;
 
 export type <%- ClassName %>InsertType = Partial<<%- ClassName %>Type>
 
-class <%- ClassName %>Service extends BaseCollection<<%- ClassName %>ReadType, <%- ClassName %>InsertType>{
-    constructor() {
-        super({
+export class <%- ClassName %>Service extends BaseCollection<<%- ClassName %>ReadType, <%- ClassName %>InsertType>{
+    constructor(client: Client) {
+        super(client, {
             <% for (var i = 0; i < Attributes.length; i++) { %>
                 <%- Attributes[i].key %>,
             <% } %>
@@ -40,5 +41,3 @@ class <%- ClassName %>Service extends BaseCollection<<%- ClassName %>ReadType, <
         return this.deleteDocument("<%- DatabaseId %>", "<%- CollectionId %>", documentId);
     }
 }
-
-export const <%- ClassName %> = new <%- ClassName %>Service();
