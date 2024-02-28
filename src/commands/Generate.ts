@@ -201,14 +201,32 @@ export class GenerateCommand extends Command {
       await this.generateClass(collection);
     }
 
+    const dbServerOutput = await ejs.renderFile(
+      join(import.meta.dirname, `./databases.server.template.ejs`),
+      {
+        ClassNames: collections.map((collection) =>
+          this.toCamelCase(collection.name, true)
+        ),
+      }
+    );
+
+    const dbClientOutput = await ejs.renderFile(
+      join(import.meta.dirname, `./databases.client.template.ejs`),
+      {
+        ClassNames: collections.map((collection) =>
+          this.toCamelCase(collection.name, true)
+        ),
+      }
+    );
+
     await fs.writeFile(
       join(import.meta.dirname, "../../src", "client.ts"),
-      `export * from "./schemas/client.ts";`
+      dbClientOutput
     );
 
     await fs.writeFile(
       join(import.meta.dirname, "../../src", "server.ts"),
-      `export * from "./schemas/server.ts"`
+      dbServerOutput
     );
 
     exec("npx tsc");
